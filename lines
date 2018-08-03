@@ -1,0 +1,29 @@
+*** turtlebot3 waffle ***
+
+export TURTLEBOT3_MODEL=waffle_pi
+roslaunch turtlebot3_gazebo turtlebot3_world.launch
+roslaunch turtlebot3_gazebo turtlebot3_gazebo_rviz.launch
+roslaunch turtlebot3_slam turtlebot3_slam.launch slam_methods:=gmapping
+roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch
+rosrun map_server map_saver -f ~/map
+roslaunch turtlebot3_navigation turtlebot3_navigation.launch map_file:=$HOME/map.yaml
+
+
+
+*** DYNAMIXEL ***
+
+sudo chmod a+rw /dev/ttyUSB0
+roslaunch my_dynamixel_workbench_tutorial velocity_control.launch
+rostopic echo /dynamixel_state
+rosrun dynamixel_workbench_operators wheel_operator
+
+
+
+*** joystick ****
+roslaunch teleop_twist_joy teleop.launch
+rosrun test control_with_joy.py
+
+
+*** lader (LDS-1) ***
+sudo chmod a+rw /dev/ttyUSB0
+roslaunch hls_lfcd_lds_driver view_hlds_laser.launch
