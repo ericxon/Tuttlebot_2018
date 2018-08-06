@@ -1,0 +1,9 @@
+에이프릴태그 공식 가이드
+
+http://wiki.ros.org/apriltags2_ros/Tutorials/Detection%20in%20a%20video%20stream
+
+
+실행법 : 
+1. apriltags2_ros, launch_april_tag, my_code, usb_cam을 catkin_ws/src 에 clone 한 후 catkin_ws에서 catkin_make 를 해준다
+2. roslaunch launch_april_tag launch_april_tag.launch를 실행 해 주면 usb카메라를 통해 비치는 영상 2개가 나오는데 하나는 usb카메라를 통해 그대로 찍히고 있는 영상이며, 다른 하나는 에이프릴 테그를 감지한 결과를 보여주는 화면이다
+3. rostopic echo /tag_detections를 통해 태그의 위치 정보를 알 수 있다고 공식 가이드에 기술되어 있지만 실제로는 아이디 밖에 나오지 않는다.(problem)
