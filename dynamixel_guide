@@ -1,0 +1,27 @@
+dynamixel Guide
+
+http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/ 이 사이트를 참고했습니다.
+
+$ sudo apt-get install ros-kinetic-dynamixel-workbench
+$ sudo apt-get install ros-kinetic-dynamixel-workbench-msgs
+* dynamixel 에 관한 기본적인 ros 프로램을 설치합니다
+이파일엔 dynamxiel 에 관한 정보 수정, 포지션제어 , 속도제어, 토크제어 등이있습니다
+
+각각의 제어를 하려면 launch 파일을 만들어야 하는데 제가 업로드한  my_dynamxiel_workbench_tutorial 폴더에 모든 laucnh 파일이 있습니다
+
+제가 주로 터틀봇을 동작시킬때는 velocity_control 즉, 속도제어를 통해서 터틀봇을 움직이는데. 그 방법은 다음과 같습니다.
+
+1. 터틀봇과 연결되있는 USB를 컴퓨터와 연결합니다.
+2. 그리고 연결한 후 sudo chmod a+rw /dev/ttyUSB0 을 통해 연결한 USB에 권한을 부여합니다.
+3. 2번에서 주로 문제가 발생하는데 각각의 Launch 파일을 보시면  <arg name="device_name" default="/dev/ttyUSB0"/> 이런식으로  
+   ttyUSB 뒤에 숫자가 있습니다. USB에 연결된 포트를 뜻하는데 만약 USB에 권한을 줘야하는 장치를 연결한 것이라면 이 숫자가 겹쳐지지 않게 유의해야 합니다.
+   예를 들어 터틀봇을 처음연결했다면 처음 ttyUSB뒤에 숫자는 0이되어야 합니다. 그리고 만약 하나의 USB장치를 더 연결해서 쓰고 싶으면 Launch 파일에 들어가 
+    <arg name="device_name" default="/dev/ttyUSB0"/> 라인의 ttyUSB0 을 그다음 숫자로 바꿔야합니다. 그렇게 USB에 권한을 준다면 충돌 없이 여러
+    개의 USB장치를 동작시킬 수 있습니다. 만약 확신이 없다면 터미널에 ls /dev 라는 명령어를 입력해 USB을 확인하는 것도 좋은 방법입니다. 
+4. 그 후에 roslaunch my_dynamixel_workbench_tutorial velocity_control.launch 를 터미널에 입력해 터틀봇을 움직일 준비를 하고
+5.  rosrun dynamixel_workbench_operators wheel_operator 로 키보드를 통해 터틀봇을 움직입니다.
+6. rostopic echo /dynamixel_state을 통해 실시간으로 터틀봇의 상태를 확인 할 수 있습니다
+
+ 또 joystick을 통해 움직이는 방법이 있는데, 위의 과정을 USB권한만 부여한 후 런치파일 하나로 joystick을 통해 로봇을 조종할 수 있게 만든 파일이 있습니다.
+ 
+   
