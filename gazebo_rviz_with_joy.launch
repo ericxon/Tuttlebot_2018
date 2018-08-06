@@ -35,6 +35,9 @@
   <node pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
      <rosparam command="load" file="$(arg config_filepath)" />
   </node>
-  <node name ="control_with_joy" pkg="test" type="control_with_joy.py" output="screen"/>
+  <node name ="control_with_joy" pkg="test" type="control_with_joy.py" output="screen"/> 
+  *** 38번째줄에있는 것이 본인이 자체적으로 만든 조이스틱컨트롤러 세팅을 이용하는 줄입니다. 우선 node name에 본인이 만든 파일의 이름을 넣고 
+  *** pkg 는 그 파일이 속해있는 패키지의 이름, 그리고 type 은 그파일의 이름과 파이썬을 이용했다면 py, 씨쁠쁠이라면 cpp 등을 이용하고 
+  *** 이 결과를 터미널상에 띄우려면 output="screen"/>을 추가합니다 
 
 </launch>
