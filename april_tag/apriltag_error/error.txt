@@ -1,0 +1,6 @@
+에이프릴태그 공식 가이드
+
+http://wiki.ros.org/apriltags2_ros/Tutorials/Detection%20in%20a%20video%20stream
+
+
+april_tag_guid 폴더 안에 있는 파일에 기술되어 있는 대로 실행한 후 rostopic ehco /tag_detections를 이용하여 태그의 정보를 보면 tag의 아이디 정보는 나오지만 위치 정보는 나오지 않는다 
