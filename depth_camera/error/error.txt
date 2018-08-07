@@ -1,0 +1,12 @@
+실행
+
+
+버그:
+
+설치가이드를 따라 설치 후 실행을 하였을 때 설치 및 실행 자체에는 문제가 없지만 
+
+실행 시  [ INFO] [1533653316.194858063]: No devices connected.... waiting for devices to be connected
+버그가 발생. 
+
+현제 컴퓨터가 depth 카메라 자체를 인식하지 못하고 있는 것으로 추정.
+

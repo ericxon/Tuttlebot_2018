@@ -1,0 +1,44 @@
+ROS Kinetic 설치 (http://wiki.ros.org/Robots/evarobot/Tutorials/indigo/Kinect)
+
+
+Installing dependencies:
+
+sudo apt-get install g++ python libusb-1.0-0-dev freeglut3-dev
+sudo apt-get install doxygen graphviz mono-complete
+sudo apt-get install -f
+sudo add-apt-repository ppa:openjdk-r/ppa  
+sudo apt-get update
+sudo apt-get install openjdk-7-jdk
+
+
+Intalling OpenNI:
+
+git clone https://github.com/OpenNI/OpenNI.git
+cd OpenNI
+git checkout Unstable-1.5.4.0
+cd Platform/Linux/CreateRedist
+sudo chmod +x RedistMaker
+./RedistMaker
+cd ../Redist/OpenNI-Bin-Dev-Linux-[xxx]
+sudo ./install.sh
+
+
+Installing Kinect driver:
+
+git clone git://github.com/ph4m/SensorKinect.git
+cd SensorKinect/Platform/Linux/CreateRedist
+sudo chmod +x RedistMaker
+./RedistMaker
+cd ../Redist/Sensor-Bin-Linux-x64-v*
+sudo ./install.sh
+
+
+ROS에서 제공하는 oppenni 모듈을 설치(http://wiki.ros.org/openni_launch)
+
+roslaunch openni_launch openni.launch 를 이용하여 실행
+
+
+버그:
+설치 및 실행 자체에는 문제가 없지만 실행 시  [ INFO] [1533653316.194858063]: No devices connected.... waiting for devices to be connected
+버그가 발생. 현제 컴퓨터가 depth 카메라 자체를 인식하지 못하고 있는 것으로 예상.
+
