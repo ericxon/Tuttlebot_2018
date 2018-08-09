@@ -27,12 +27,16 @@
    (1) $ sudo apt-get install ros-kinetic-dynamixel-workbench 
        $ sudo apt-get install ros-kinetic-dynamixel-workbench-msgs
        ROBOTIS 홈페이지 에서 제공 : http://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_workbench/ 에서 받을 수 있다.
+   
    (2) <조이스틱을 이용할 경우에만 해당한다>
        http://emanual.robotis.com/docs/en/platform/turtlebot3/teleoperation/ 사이트를 참고해서 자료를 받을 수 있다
+       
        * PS3 : $ sudo apt-get install ros-kinetic-joy ros-kinetic-joystick-drivers ros-kinetic-teleop-twist-joy 로 받은 후
         <launch> $ roslaunch teleop_twist_joy teleop.launch 로 런치
+       
        * XBOX: $ sudo apt-get install xboxdrv ros-kinetic-joy ros-kinetic-joystick-drivers ros-kinetic-teleop-twist-joy
         <launch> $ roslaunch teleop_twist_joy teleop.launch
+       
        * Wii : $ sudo apt-get install ros-kinetic-wiimote libbluetooth-dev libcwiid-dev
         <launch> $ rosrun wiimote wiimote_node 로 노드 생성후 rosrun wiimote teleop_wiimote 으로 토픽 전송
 
