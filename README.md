@@ -94,3 +94,29 @@
 11. 라즈베리파이에 HDMI, 키보드, 마우스를 연결한 후 파워선에 휴대폰 충전기와 같은 전원 케이블을 장착한다(전원케이블을 맨 마지막에 장착해야 한다)
 12. 라즈베리파이에 연결한 모니터에 우분투 설치화면이 뜨며 설치가 시작된다.
 
+
+#라즈베리파이에 ros 설치 방법
+
+1. wget https://raw.githubusercontent.com/ROBOTIS-GIT/robotis_tools/master/install_ros_kinetic_rp3.sh --no-check-certificate && chmod 755 ./install_ros_kinetic_rp3.sh && bash ./install_ros_kinetic_rp3.sh 명령어로 로스 패키지를 설치한다.
+
+2. cd ~/catkin_ws/src로 이동한다
+
+3. 
+git clone https://github.com/ROBOTIS-GIT/hls_lfcd_lds_driver.git
+git clone https://github.com/ROBOTIS-GIT/turtlebot3_msgs.git
+git clone https://github.com/ROBOTIS-GIT/turtlebot3.git
+명령어들로 관련 패키지들을 설치한다.
+하지만 필자의 경우는 이것들을 다른 컴퓨터에서 다운받은 후 그것들을 저장매채(usb메모리, 외장하드...)를 통해 라즈베리파이로 옮겼다.
+
+4. cd ~/catkin_ws/src/turtlebot3로 이동한다.
+
+5 sudo rm -r turtlebot3_description/ turtlebot3_teleop/ turtlebot3_navigation/ turtlebot3_slam/ turtlebot3_example/ 명령어로 터틀봇에서 쓰지 않는 것들을 삭제한다.
+
+6. sudo apt-get install ros-kinetic-rosserial-python ros-kinetic-tf 명령어로 터틀봇의 독립적인 패키지를 설치한다.
+
+7. 
+source /opt/ros/kinetic/setup.bash
+cd ~/catkin_ws && catkin_make
+명령어로 컴파일 한다.
+
+8. rosrun turtlebot3_bringup create_udev_rules 를 이용하면 openCR의 usb포트들을 root의 권한 없이 이용할 수 있다.
