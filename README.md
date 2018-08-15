@@ -78,6 +78,7 @@
    
    
 #Tuttlebot3 라즈베리파이에 OS(UBUNTU MATE) 설치법
+
 공식 매뉴얼 : http://emanual.robotis.com/docs/en/platform/turtlebot3/raspberry_pi_3_setup/#install-linux-ubuntu-mate
 
 1. UBUNTU MATE 다운로드 페이지 https://ubuntu-mate.org/download/ 로 이동한 후 Raspberry Pi 버전을 컴퓨터 내에 다운로드 한다.
