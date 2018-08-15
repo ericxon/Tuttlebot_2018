@@ -1,4 +1,5 @@
 # Tuttlebot_2018
+ 
 
 #slam 실행방법
 1. 필요 패키지 :
@@ -74,3 +75,22 @@
 
 4. (1) 키보드로 조작하려면 $ rosrun dynamixel_workbench_operators wheel_operator 을 통해 wadsx 키를 통해 dynamixel 을 제어한다.
    (2) 조이스틱으로 조작하려면 위의 1-(2) 에 해당조이스틱 종류에 맞는 파일을 받고 런치 한후 개인적으로 만든 파일이나 test 폴더의 control_with_joy 파        일을 실행 시킨다 $ rosrun test control_with_joy
+   
+   
+#Tuttlebot3 라즈베리파이에 OS(UBUNTU MATE) 설치법
+공식 매뉴얼 : http://emanual.robotis.com/docs/en/platform/turtlebot3/raspberry_pi_3_setup/#install-linux-ubuntu-mate
+
+1. UBUNTU MATE 다운로드 페이지 https://ubuntu-mate.org/download/ 로 이동한 후 Raspberry Pi 버전을 컴퓨터 내에 다운로드 한다.
+2. sudo apt-get install gddrescue xz-utils 을 이용하여 gddrescue를 설치한다
+3. ubuntu mate를 다운로드 한 디렉토리로 이동하여 unxz ubuntu-mate-16.04.2-desktop-armhf-raspberry-pi.img.xz를 수행해 준다.
+4. sudo apt-get install gnome-disk-utility를 수행하여 gnome-disk를 설치한다.
+5. 컴퓨터에 SD카드를 장착한다
+6. 우분투 화면 왼쪽 위에 있는 Search Your Computer에서 disks를 수행한다.
+7. 왼쪽 메뉴에서 SD카드를 선택한 후 오른쪽 메뉴(석삼자)에서 포멧을 한번 해 준다.
+8. 오른쪽 메뉴에서 restore를 선택한 후 ubuntu-mate-16.04.2-desktop-armhf-raspberry-pi.img 를 수행한다.
+9. 이어지는 선택창에서도 restore를 클릭한다.
+10. 설치가 끝난 후 SD카드를 분리하고, 그것을 터틀봇에 있는 라즈베리 파이에 장착한다.
+11. 라즈베리파이에 HDMI, 키보드, 마우스를 연결한 후 파워선에 휴대폰 충전기와 같은 전원 케이블을 장착한다(전원케이블을 맨 마지막에 장착해야 한다)
+12. 라즈베리파이에 연결한 모니터에 우분투 설치화면이 뜨며 설치가 시작된다.
+
+6. 
