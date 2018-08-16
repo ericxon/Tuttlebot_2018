@@ -1,0 +1,144 @@
+<windows 10 설치>
+
+	windows usb 삽입 후 부팅
+
+	<F11>로 메인보드 바이오스 진입 -> 'USB key'를 Boot Priority 첫번째로 설정
+
+	모든 디스크 포맷 후 windows 10 설치.
+
+	설치완료 - > boot priority를 'Hard Disk'로 재설정
+
+ 
+
+<windows 10 볼륨축소(우분투 설치용량 확보)>
+
+	windows 10 진입 -> Win+'R' (실행창) -> diskmgmt.msc 입력
+
+	마우스 우클릭으로 볼륨축소 -> 우분트로 확보할 용량 입력[MB] 후 '축소'
+
+<windwos 10 빠른시작 끄기>
+
+	Win+'R' (실행창) -> control 입력 -> 전원옵션
+
+	좌측의 '절전 모드 해제 시 암호 사용'
+
+	현재 사용할 수 없는 설정 변경 클릭 -> 종료설정의 빠른 시작 켜그 체크해제.
+
+	변경내용저장.
+
+<secure boot 제거>
+
+	<F11>로 메인보드 바이오스 진입 -> secure boot 검색 , Disabled 설정.
+
+	
+
+<ubuntu 설치>
+
+	ubuntu usb 삽입 후 부팅
+
+	<F11>로 메인보드 바이오스 진입 -> 'USB key'를 Boot Priority 첫번째로 설정
+
+	install Ubuntu(English) -> Download updates .. check  // install third party .. check
+
+	somthing esle -> free space를 < 20000MB, Primary, Beginning, EXT4, / > , <all remaining free space, Primary, Beginning, EXT4, /home> 으로 나눔.
+
+	continue(paritioning menu) -> continue(confirm write changes to disk) -> Seoul 'continue' -> English 'continue'
+
+	설치완료 - > boot priority Hard Disk로 재설정
+
+ 
+
+ 
+
+<ubuntu 한글 설치>
+
+ 
+
+	$ sudo apt-get install fcitx-hangul
+
+ 
+
+	1. 키보드의 윈도우 버튼을 누르고 System Settings를 입력해서 실행한다. Language Support를 클릭하고 -> 'install' -> 설치가 완료될때까지 기다린다.
+
+	2. Language Support에서 Keyboard input method system을 fcitx로 변경한다.
+
+	3. 재부팅한다.
+
+	4. 다시 키보드의 윈도우 버튼을 누르고 System Settings를 입력해서 실행한다. Keyboard를 클릭하고 Shortcuts -> Typing을 클릭한다.
+
+	5. 설정되어있는 4가지 항목을 모두 Disabled로 바꾼다. 키를 입력해야하는 항목의 경우 키보드의 backspace버튼을 누르면 Disabled로 바뀐다.
+
+	6. Compose Key의 Disabled를 눌러 Right Alt를 선택한다.
+
+	7. Switch to next source는 클릭후 키보드의 오른쪽 Alt 버튼을 눌러 Multikey로 선택한다.
+
+	8. 설정을 완료한 후 화면 상단 우측에 키보드 형태의 아이콘을 클릭한다.
+
+	9. Configure Current Input Method를 클릭한다.
+
+	10. +버튼을 눌르고 Only Show Current Language에 체크가 되어있다면 해제해준다.
+
+	11. 목록에서 Hangul을 찾아 추가해준다.
+
+	12. Global Config 메뉴를 찾아 클릭한다. Trigger Input Method를 모두 오른쪽 Alt키를 눌러 Multikey로 설정해준다.
+
+	13. Extra key for trigger input method는 Disabled로 설정하고 Share State Among Window를 All로 설정한다.
+
+	14. 재부팅하고 오른쪽 Alt 버튼으로 한/영 변환이 되는지 확인한다.
+
+ 
+
+<ip설정 (인터넷 연결)>
+
+	1. 오른쪽상단 인터넷모양 우클릭, 'Edit Connections..'
+
+	2. Ethernet의 'Wired connection 1'을 Edit
+
+	3. IPv4 Setting 탭에서 Method를 Manual, Address를 164.125.61.252, Netmask를 24, Gateway를 164.125.61.1, DNS servers를 164.125.9.2로 각각 설정.
+
+	4. Save
+
+
+<CUDA and YOLO setup>
+	https://docs.google.com/document/d/1qktOarDKTSp4cpXyJopbf0VuQJ_VSavndxLuswgCWWo/mobilebasic
+
+<HSR workstation SETUP>
+	https://docs.google.com/document/d/14B-D0WUOM36tpFVojQ3yTtDaoPL_JFbbqPvcca00Lb0/mobilebasic
+
+<ROS install>
+	$ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+	$ sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+
+	$ sudo apt-get update
+
+	$ sudo apt-get install ros-kinetic-desktop-full
+
+	$ apt-cache search ros-kinetic
+
+	$ sudo rosdep init
+	$ rosdep update
+
+	$ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+
+	$ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+<ROS workspace 설정>
+	$ mkdir -p ~/catkin_ws/src
+	$ cd ~/catkin_ws/src
+	$ catkin_init_workspace
+
+	$ cd ~/catkin_ws
+	$ catkin_make
+
+<ROS Bashrc setup>
+ 	$ gedit ~/.bashrc
+	
+	alias cs = 'cd ~/catkin_ws/src'
+	alias cm = 'cd ~/catkin_ws && catkin_make'
+	
+	source /opt/ros/kinetic/setup.bash
+	source ~/catkin_ws/devel/setup.bash
+
+	export ROS_MASTER_URI=http://localhost:11311
+	export ROS_HOSTNAME=localhost	
