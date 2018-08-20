@@ -134,6 +134,7 @@
 <ROS Bashrc setup>
  	$ gedit ~/.bashrc
 	
+	
 	alias cs = 'cd ~/catkin_ws/src'
 	alias cm = 'cd ~/catkin_ws && catkin_make'
 	
@@ -141,4 +142,20 @@
 	source ~/catkin_ws/devel/setup.bash
 
 	export ROS_MASTER_URI=http://localhost:11311
-	export ROS_HOSTNAME=localhost	
+	export ROS_HOSTNAME=localhost
+	// 위의 6줄 추가 후 save
+
+
+<slack 설치>
+	$ cd ~/Downloads
+	$ wget https://downloads.slack-edge.com/linux_releases/slack-desktop-3.2.1-amd64.deb   //(더 최신버전이있으면 최신버전추천)
+	$ sudo dpkg -i slack-desktop-3.2.1-amd64.deb
+
+<dropbox 설치>
+	$ cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+	$ ~/.dropbox-dist/dropboxd
+
+<atom 설치>
+	$ sudo add-apt-repository ppa:webupd8team/atom
+	$ sudo apt update; sudo apt install atom
+
