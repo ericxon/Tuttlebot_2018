@@ -1,0 +1,169 @@
+#!/usr/bin/env python
+
+# Copyright (c) 2011, Willow Garage, Inc.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#
+#    * Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#    * Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in the
+#      documentation and/or other materials provided with the distribution.
+#    * Neither the name of the Willow Garage, Inc. nor the names of its
+#      contributors may be used to endorse or promote products derived from
+#       this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+import rospy
+import time
+from sensor_msgs.msg import JointState
+import sys, select, termios, tty
+
+
+
+LIN_POS_STEP_SIZE = 0.01
+
+
+msg = """
+Control Your open_manipulator!
+---------------------------
+Moving around:
+
+++  a   s   d   f  ++
+--  z   x   c   v  --
+
+
+space key : force stop
+
+CTRL-C to quit
+"""
+
+e = """
+Communications Failed
+"""
+
+def getKey():
+    tty.setraw(sys.stdin.fileno())
+    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
+    if rlist:
+        key = sys.stdin.read(1)
+    else:
+        key = ''
+
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    return key
+
+def poss(target_position_1, target_position_2, target_position_3, target_position_4):
+    return "\tposition_1 : %s\t position_2 : %s\t position_3 : %s\t position_4 : %s" % (target_position_1,target_position_2,target_position_3,target_position_4)
+
+
+
+
+
+if __name__=="__main__":
+    settings = termios.tcgetattr(sys.stdin)
+
+    rospy.init_node('controle_position_keyboard')
+    pub = rospy.Publisher('/open_manipulator/goal_joint_position', JointState, queue_size=10)
+
+    start_time = time.time()
+
+    status = 0
+
+    target_position_1 = 0.0
+    target_position_2 = 0.0
+    target_position_3 = 0.0
+    target_position_4 = 0.0
+
+
+    try:
+        print msg
+        while(1):
+            key = getKey()
+            if key == 'a' :
+                target_position_1 = target_position_1 + LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 's' :
+                target_position_2 = target_position_2 + LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 'd' :
+                target_position_3 = target_position_3 + LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 'f' :
+                target_position_4 = target_position_4 + LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+
+
+
+            elif key == 'z' :
+                target_position_1 = target_position_1 - LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 'x' :
+                target_position_2 = target_position_2 - LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 'c' :
+                target_position_3 = target_position_3 - LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+            elif key == 'v' :
+                target_position_4 = target_position_4 - LIN_POS_STEP_SIZE
+                status = status + 1
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4)
+
+
+
+
+            elif key == ' ' :
+                target_position_1 = 0.0
+                target_position_2 = 0.0
+                target_position_3 = 0.0
+                target_position_4 = 0.0
+
+                print poss(target_position_1,target_position_2,target_position_3,target_position_4,)
+            else:
+                if (key == '\x03'):
+                    break
+
+            if status == 20 :
+                print msg
+
+                status = 0
+
+            if float(time.time()) >= float(start_time)+0.05:
+                jointstate = JointState()
+
+                jointstate.position = [target_position_1, target_position_2, target_position_3, target_position_4]
+
+                pub.publish(jointstate)
+                start_time = time.time()
+
+
+
+    except:
+        print e
+
+    finally:
+        jointstate = JointState()
+        jointstate.position = [0,0,0,0]
+        pub.publish(jointstate)
+
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
