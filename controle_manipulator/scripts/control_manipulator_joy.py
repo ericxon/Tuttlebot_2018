@@ -2,6 +2,7 @@
 import rospy
 from sensor_msgs.msg import Joy
 from sensor_msgs.msg import JointState
+
 from math import pi
 
 class Control:
@@ -18,6 +19,7 @@ class Control:
         self.joint2_state = 0
         self.joint3_state = 0
         self.joint4_state = 0
+        self.gripper_position = 0
         self.stop = False
         rospy.Subscriber("/joy", Joy, self.callback)
         rospy.Subscriber('/open_manipulator/joint_states',JointState, self.callback2)
@@ -38,6 +40,8 @@ class Control:
         if(ros_data.buttons[11]!=0):
             self.joint1_goal = ros_data.buttons[11]*pi
             self.stop = False
+        
+
         if(ros_data.buttons[12]!=0):
             self.joint1_goal = -ros_data.buttons[12]*pi
             self.stop = False
@@ -61,12 +65,21 @@ class Control:
             self.stop = False
         if(ros_data.buttons[4]==1):
             self.stop = True
+
         if(ros_data.buttons[5]==1):
             self.joint1_goal = 0
             self.joint2_goal = 0
             self.joint3_goal = 0
             self.joint4_goal = 0
             self.stop = False
+        if(ros_data.axes[2]==-1):
+            self.gripper_position = 0.01
+
+        if(ros_data.axes[2]==1 and ros_data.axes[5]==1):
+            self.gripper_position = 0
+        if(ros_data.axes[5]==-1):
+            self.gripper_position = -0.01
+
 
 
 
@@ -95,7 +108,11 @@ class Control:
 
     def moveArm(self):
         joint_publisher = rospy.Publisher('/open_manipulator/goal_joint_position', JointState, queue_size=10)
+        gripper_publisher = rospy.Publisher('/open_manipulator/goal_gripper_position', JointState, queue_size=10)
         joint_state = JointState()
+        gripper_state = JointState()
+        gripper_state.position = [self.gripper_position]
+        gripper_publisher.publish(gripper_state)
         self.joint1_move = self.setMove(self.joint1_state,self.joint1_goal)
         self.joint2_move = self.setMove(self.joint2_state,self.joint2_goal)
         self.joint3_move = self.setMove(self.joint3_state,self.joint3_goal)
@@ -110,17 +127,22 @@ class Control:
 
 
         joint_state.position = [self.joint1_move,self.joint2_move,self.joint3_move,self.joint4_move]
+
         joint_publisher.publish(joint_state)
-        print(self.stop)
-        print('state : ' + str(self.joint2_state))
-        print('goal : ' + str(self.joint2_goal))
-        print('move : ' + str(self.joint2_move))
+
+        #gripper_publisher.publish(gripper_state)
+
+        print(self.gripper_position)
 
 
 
 
     def setMove(self, state, goal):
         if(self.stop):
+            self.joint1_goal = self.joint1_state
+            self.joint2_goal = self.joint2_state
+            self.joint3_goal = self.joint3_state
+            self.joint4_goal = self.joint4_state
             raise Exception('stop')
 
         if(abs(goal-state)>1):
