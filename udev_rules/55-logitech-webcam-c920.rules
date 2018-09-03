@@ -1,0 +1,1 @@
+SUBSYSTEM=="usb", ATTR{idProduct}=="082d", ATTR{idVendor}=="046d", MODE:="0666", OWNER:="root", GROUP:="video", SYMLINK+="video0"
